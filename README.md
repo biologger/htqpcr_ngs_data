@@ -1,3 +1,12 @@
+
+The full data analysis can be viewed as html export:
+
+(htqpcr_ngs_comparison.html)[https://github.com/biologger/htqpcr_ngs_data/blob/main/htqpcr_ngs_comparison.html]
+
+and as html with embeded Supplementary Figures:
+
+(htqpcr_ngs_comparison_R.html)[https://github.com/biologger/htqpcr_ngs_data/blob/main/htqpcr_ngs_comparison_R.html]
+
 Linux/Mac:
 
 Clone repository
@@ -27,6 +36,5 @@ Open and Run the notebook
 
 Windows:
 
-We recommend a linux docker container or a linux OS in a virtual machine. 
+We recommend a linux docker container or a linux OS in a virtual machine.
 For Windows install R Studio and Rtools manually.
-
