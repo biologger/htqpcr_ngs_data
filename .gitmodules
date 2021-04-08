@@ -1,0 +1,3 @@
+[submodule "HTqPCR_dataparser"]
+	path = HTqPCR_dataparser
+	url = https://github.com/biologger/htqpcr_validation_data.git

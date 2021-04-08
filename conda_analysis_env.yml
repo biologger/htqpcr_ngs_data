@@ -1,0 +1,15 @@
+name: htqpcr_ngs_comparison
+channels:
+  - defaults
+  - bioconda
+  - conda-forge
+dependencies:
+  - python=3.9.2
+  - scipy
+  - seaborn
+  - notebook
+  - r-base=4.0.3
+  - r-biocmanager
+  - r-irkernel
+  - rpy2
+  - statsmodels
