@@ -506,6 +506,7 @@ class PlotFunctions:
     def bias_plot(
             df1, df2=None, df3=None, df4=None, ax=None,
             color_pal="colorblind", legend=None, colors=None, markers=None):
+
         if ax is None:
             ax=plt.gca()
         datalist = []
@@ -557,7 +558,7 @@ class PlotFunctions:
         ylim = ax.get_ylim()
         ax.plot([1, 1], list(ax.get_ylim()), color="black", linewidth=1)
         ax.set_yticks(pos)
-        ax.set_yticklabels(labels, style="italic")
+        ax.set_yticklabels(labels, style="italic", fontsize=10)
         ylim = (ylim[0] + 0.5, ylim[1] - 0.5)
         ax.set_ylim(ylim)
         ax.set_xscale("log")
@@ -568,7 +569,7 @@ class PlotFunctions:
         ax.xaxis.set_major_formatter(formatter)
         ax.grid(axis="x", which="major")
 
-        ax.set_xlabel("Bias estimate")
+        ax.set_xlabel("Bias estimate", fontsize=10)
 
         return ax
 
