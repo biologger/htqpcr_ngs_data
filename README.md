@@ -1,11 +1,11 @@
 
 The full data analysis can be viewed as html export:
 
-(htqpcr_ngs_comparison.html)[https://github.com/biologger/htqpcr_ngs_data/blob/main/htqpcr_ngs_comparison.html]
+[htqpcr_ngs_comparison.html](https://github.com/biologger/htqpcr_ngs_data/blob/main/htqpcr_ngs_comparison.html)
 
 and as html with embeded Supplementary Figures:
 
-(htqpcr_ngs_comparison_R.html)[https://github.com/biologger/htqpcr_ngs_data/blob/main/htqpcr_ngs_comparison_R.html]
+[htqpcr_ngs_comparison_R.html](https://github.com/biologger/htqpcr_ngs_data/blob/main/htqpcr_ngs_comparison_R.html)
 
 Linux/Mac:
 
@@ -32,6 +32,7 @@ Start Jupyter Notebook
 		$ jupyter-notebook
 
 Open and Run the notebook
+
 * htqpcr_ngs_comparison_R.ipynb
 
 Windows:
