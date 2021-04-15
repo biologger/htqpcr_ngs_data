@@ -347,8 +347,9 @@ class PlotFunctions:
         # linear reg calculations
         df["NGS_log"] = MathFunctions().log10_tf(df, "NGS_count")
         df["qPCR_log"] = MathFunctions().log10_tf(df, "qPCR_count")
+        shared = df.query('Category == "shared_positive"')
         slope, intercept, r_value, p_value, std_err = linregress(
-            df["NGS_log"], df["qPCR_log"])
+            shared["NGS_log"], shared["qPCR_log"])
         colors = color_pal[0: len(set(df["Category"]))]
         sns.scatterplot(
             x="NGS_log", y="qPCR_log", data=df,
@@ -383,8 +384,9 @@ class PlotFunctions:
             ax.axhline(np.log10(800), color='red', linestyle='--', alpha=0.7)
         else:
             yd = "qPCR_rel"
+            shared = df.query('Category == "shared_positive"')
             slope, intercept, r_value, p_value, std_err = linregress(
-                df["NGS_rel"], df["qPCR_rel"])
+                shared["NGS_rel"], shared["qPCR_rel"])
         sns.scatterplot(
             x="NGS_rel", y=yd, data=df,
             hue="Category", palette=colors, ax=ax, s=60, alpha=0.9)
