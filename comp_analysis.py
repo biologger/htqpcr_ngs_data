@@ -359,7 +359,7 @@ class PlotFunctions:
                 "R² = {:.3f}".format(r_value ** 2),
                 xy=(0.025, 0.9), fontsize=10, xycoords='axes fraction')
         ax.set_ylabel("HT-qPCR\nlog(copies/\u03BCl)", fontsize=10)
-        ax.set_xlabel("log(reads)\n16S rRNA amplicon sequencing", fontsize=10)
+        ax.set_xlabel("log(reads)\nNGS", fontsize=10)
         ax.axhline(np.log10(800), color='red', linestyle='--', alpha=0.7)
 
         # legend
@@ -399,7 +399,7 @@ class PlotFunctions:
                     "R² = {:.3f}".format(r_value ** 2),
                     xy=(0.025, 0.9), fontsize=10, xycoords='axes fraction')
         ax.set_xlabel(
-            "relative abundance [%]\n16S rRNA amplicon sequencing",
+            "relative abundance [%]\nNGS",
             fontsize=10)
 
         handles, labels = ax.get_legend_handles_labels()
@@ -416,20 +416,19 @@ class PlotFunctions:
         df1 = df.query('Method == "A" or Method == "B"')
         df2 = df.query('Method == "C" or Method == "D"')
 
-        clabels=["raw", "raw CN", "corr.", "corr. CN"]
-        markers = ["o", "o", "s", "s"]
+        clabels=["raw", "raw GCN", "corr.", "corr. GCN"]
+        markers = ["o", "o", "^", "^"]
         cpal = color_pal[0:len(clabels)]
         leg_handle = []
 
-        palette = color_pal[0:len(clabels)]
-        c1 = palette[0:2]
-        c2 = palette[2::]
+        c1 = cpal[0:2]
+        c2 = cpal[2::]
         sns.stripplot(
                 x="Sample", y="Dissimilarity", hue="Method", data=df1,
                 palette=c1, jitter=0., dodge=True, ax=ax, marker="o")
         sns.stripplot(
                 x="Sample", y="Dissimilarity", hue="Method", data=df2,
-                palette=c2, jitter=0., dodge=True, ax=ax, marker="s")
+                palette=c2, jitter=0., dodge=True, ax=ax, marker="^")
 
         for i, label in enumerate(clabels):
             handle = mlines.Line2D([], [], color=cpal[i], marker=markers[i],
@@ -541,7 +540,7 @@ class PlotFunctions:
         if markers:
             markers = markers
         else:
-            markers = ["o", "o", "s", "s"]
+            markers = ["o", "o", "^", "^"]
         lim_x = []
         for i, data in enumerate(datalist):
             ax.plot(
