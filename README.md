@@ -1,11 +1,9 @@
 
-The full data analysis can be viewed as html export:
+The full data analysis can be viewed as html:
 
-[htqpcr_ngs_comparison.html](https://github.com/biologger/htqpcr_ngs_data/blob/main/htqpcr_ngs_comparison.html)
+[htqpcr_ngs_comparison_R.html](https://biologger.github.io/htqpcr_ngs_data/htqpcr_ngs_comparison_R.html)
 
-and as html with embeded Supplementary Figures:
-
-[htqpcr_ngs_comparison_R.html](https://github.com/biologger/htqpcr_ngs_data/blob/main/htqpcr_ngs_comparison_R.html)
+In order to run the Jupyter notebook and to download the complete data set, please follow the instructions below.
 
 Linux/Mac:
 
