@@ -11,5 +11,6 @@ dependencies:
   - r-base=4.0.3
   - r-biocmanager
   - r-irkernel
+  - r-gert
   - rpy2
   - statsmodels
