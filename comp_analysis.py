@@ -291,25 +291,40 @@ class HelperFunctions:
 
 
 class PlotFunctions:
+
     def draw_qpcr_heatmap(qpcrdata, annotation, ax, cax):
-        cmap = ListedColormap(sns.color_palette("Blues", 5))
-        cmap.set_under("lightgrey")
-        cbar_label = "log copies/\u03BCl"
+            cmap = ListedColormap(sns.color_palette("Blues", 5))
+            cmap.set_under("lightgrey")
+            cbar_label = "log copies/\u03BCl"
 
-        sns.heatmap(
-            qpcrdata, vmin=3, vmax=8, cmap=cmap, annot=annotation,
-            annot_kws={"size": 8, "color": "black"}, fmt='',
-            cbar_kws={
-                    'orientation': 'vertical', "label": cbar_label,
-                    'extend': "min"},
-            ax=ax, cbar_ax=cax, linewidths=1, linecolor="black")
+            sns.heatmap(
+                qpcrdata, vmin=3, vmax=8, cmap=cmap, annot=annotation,
+                annot_kws={"size": 8, "color": "black"}, fmt='',
+                cbar_kws={
+                        'orientation': 'vertical', "label": cbar_label,
+                        'extend': "min"},
+                ax=ax, cbar_ax=cax, linewidths=1, linecolor="black")
 
-        ax.set_yticklabels(ax.get_ymajorticklabels(), rotation=0, style="italic", fontsize=12)
-        ax.set_xticklabels(ax.get_xmajorticklabels(), rotation=0, fontsize=12)
-        ax.tick_params(axis='both', length=0.0, width=0.0)
-        ax.yaxis.tick_right()
-        ax.yaxis.set_label_position('right')
-        return ax
+            newlabels = []
+            for label in ax.get_ymajorticklabels():
+                if "subsp." in label.get_text():
+                    italic = label.get_text().split("subsp.")
+                    newtext = (
+                        '$\it{' + "\ ".join(italic[0].split(" ")) + '}$'
+                        + "subsp. " + '$\it{' + italic[1].strip() + '}$')
+                else:
+                    newtext = '$\it{' + "\ ".join(label.get_text().split(" ")) + '}$'
+
+                label.set_text(newtext)
+                newlabels.append(label)
+
+            ax.set_yticklabels(newlabels, rotation=0, fontsize=12)
+            ax.set_xticklabels(ax.get_xmajorticklabels(), rotation=0, fontsize=12)
+            ax.tick_params(axis='both', length=0.0, width=0.0)
+            ax.yaxis.tick_right()
+            ax.yaxis.set_label_position('right')
+
+            return ax
 
 
     def draw_ngs_barplot(df_high, df_low, ax, th):
@@ -331,7 +346,7 @@ class PlotFunctions:
                 sharex=True, title="< " + str(th) + "% average abundance")
         # Legend
         handles, labels = q2.get_legend_handles_labels()
-        plt.legend(
+        leg = plt.legend(
             handles, labels, loc='upper right', frameon=False,
             prop={"style": "italic"}, bbox_to_anchor=(1.408, 1.023))
         # y-axis labels
@@ -340,6 +355,11 @@ class PlotFunctions:
         # remove ticks
         ax[0].tick_params(axis='x', length=0.0, width=0.0, which="both")
         ax[1].tick_params(axis='x', length=0.0, width=0.0, which="both", rotation=0)
+
+        for txt in leg.get_texts():
+            if "Other species" in txt.get_text():
+                txt.set_style("normal")
+
         return ax
 
 
@@ -471,7 +491,7 @@ class PlotFunctions:
         mask = df.columns.isin(shared_species)
         spec_order = list(df[shared_species].mean(axis=0).sort_values(ascending=False).index)
         sumdf = df.loc[:, spec_order]
-        sumdf["Other sp."] = df.loc[:, ~mask].sum(axis=1)
+        sumdf["Other species"] = df.loc[:, ~mask].sum(axis=1)
         return sumdf
 
     def draw_linked_barplots(df, ax, legendax, refdict, cmap):
@@ -493,11 +513,15 @@ class PlotFunctions:
 
         # Create legend
         handles, labels = q.get_legend_handles_labels()
-        legendax.legend(
+        leg = legendax.legend(
                             handles, labels, loc=2, ncol=1,  bbox_to_anchor=(0.65, 1),
                             prop={"style": "italic", "size": 12}, frameon=False,
                             columnspacing=0.4, labelspacing=0.5, handletextpad=0.5,
                             borderpad=0.1)
+
+        for txt in leg.get_texts():
+            if "Other species" in txt.get_text():
+                txt.set_style("normal")
 
         return ax
 
