@@ -331,8 +331,8 @@ class PlotFunctions:
         l_palette = sns.color_palette("Paired") + [sns.color_palette("Greys",5)[2]]
         # Upper plot > th% rel. abundance
         q = df_high.T.plot.bar(
-                stacked=True, ax=ax[0], legend=False, sharex=True,
-                title="> " + str(th) + "% average abundance")
+                stacked=True, ax=ax[0], legend=False, sharex=False,
+                title="≥ " + str(th) + "% average abundance")
         # Create first legend
         handles, labels = q.get_legend_handles_labels()
         first_legend = plt.legend(
@@ -343,7 +343,7 @@ class PlotFunctions:
         # Lower plot < th% rel abundance
         q2 = df_low.T.plot.bar(
                 stacked=True, ax=ax[1], legend=False, color=l_palette,
-                sharex=True, title="< " + str(th) + "% average abundance")
+                sharex=False, title="< " + str(th) + "% average abundance")
         # Legend
         handles, labels = q2.get_legend_handles_labels()
         leg = plt.legend(
@@ -353,7 +353,7 @@ class PlotFunctions:
         ax[0].set_ylabel("relative abundance [%]")
         ax[1].set_ylabel("relative abundance [%]")
         # remove ticks
-        ax[0].tick_params(axis='x', length=0.0, width=0.0, which="both")
+        ax[0].tick_params(axis='x', length=0.0, width=0.0, which="both", rotation=0)
         ax[1].tick_params(axis='x', length=0.0, width=0.0, which="both", rotation=0)
 
         for txt in leg.get_texts():
