@@ -292,39 +292,51 @@ class HelperFunctions:
 
 class PlotFunctions:
 
-    def draw_qpcr_heatmap(qpcrdata, annotation, ax, cax):
-            cmap = ListedColormap(sns.color_palette("Blues", 5))
-            cmap.set_under("lightgrey")
-            cbar_label = "log copies/\u03BCl"
+    def draw_qpcr_heatmap(qpcrdata, annotation, ax, cax, abbrev=False, annot_size=7):
+        cmap = ListedColormap(sns.color_palette("Blues", 5))
+        cmap.set_under("lightgrey")
+        cbar_label = "log copies/\u03BCl"
 
-            sns.heatmap(
-                qpcrdata, vmin=3, vmax=8, cmap=cmap, annot=annotation,
-                annot_kws={"size": 8, "color": "black"}, fmt='',
-                cbar_kws={
-                        'orientation': 'vertical', "label": cbar_label,
-                        'extend': "min"},
-                ax=ax, cbar_ax=cax, linewidths=1, linecolor="black")
+        sns.heatmap(
+            qpcrdata, vmin=3, vmax=8, cmap=cmap, annot=annotation, fmt="",
+            annot_kws={"size": annot_size, "color": "black", "ha": "center", "linespacing": 0.95},
+            cbar_kws={
+                    'orientation': 'horizontal', "label": cbar_label,
+                    'extend': "min"},
+            ax=ax, cbar_ax=cax, linewidths=1, linecolor="black")
 
-            newlabels = []
-            for label in ax.get_ymajorticklabels():
-                if "subsp." in label.get_text():
-                    italic = label.get_text().split("subsp.")
+        newlabels = []
+        for label in ax.get_ymajorticklabels():
+            if "subsp." in label.get_text():
+                italic = label.get_text().split("subsp.")
+                if abbrev:
+                    newtext = (
+                        '$\it{' +
+                        italic[0].split(" ")[0][0] + ".\ " + italic[0].split(" ")[1]
+                        + '}$'
+                        + " subsp.\n" + '$\it{' + italic[1].strip() + '}$')
+                else:
                     newtext = (
                         '$\it{' + "\ ".join(italic[0].split(" ")) + '}$'
                         + "subsp. " + '$\it{' + italic[1].strip() + '}$')
+            else:
+                if abbrev:
+                    newtext = (
+                        '$\it{' +
+                        label.get_text().split(" ")[0][0] + ".\ "
+                        + label.get_text().split(" ")[1] + '}$')
                 else:
                     newtext = '$\it{' + "\ ".join(label.get_text().split(" ")) + '}$'
 
-                label.set_text(newtext)
-                newlabels.append(label)
+            label.set_text(newtext)
+            newlabels.append(label)
+        ax.set_yticklabels(newlabels, rotation=0, fontsize=8, linespacing=1.2)
+        ax.set_xticklabels(ax.get_xmajorticklabels(), rotation=0, fontsize=8)
+        ax.tick_params(axis='both', length=0.0, width=0.0)
+        ax.yaxis.tick_right()
+        ax.yaxis.set_label_position('right')
 
-            ax.set_yticklabels(newlabels, rotation=0, fontsize=12)
-            ax.set_xticklabels(ax.get_xmajorticklabels(), rotation=0, fontsize=12)
-            ax.tick_params(axis='both', length=0.0, width=0.0)
-            ax.yaxis.tick_right()
-            ax.yaxis.set_label_position('right')
-
-            return ax
+        return ax
 
 
     def draw_ngs_barplot(df_high, df_low, ax, th):
